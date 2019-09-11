@@ -63,7 +63,7 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
         return parent::getCodeFields($state) + [
             'response_mode' => 'form_post'
         ];
-    }}
+    }
 
     /**
      * {@inheritdoc}

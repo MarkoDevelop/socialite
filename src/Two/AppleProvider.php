@@ -45,8 +45,25 @@ class AppleProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByAccessTokenResponse($response)
     {
-        return json_decode(base64_decode(explode('.', Arr::get($response, 'id_token'))[1]), true);
+        $token = Arr::get($response, 'id_token');
+
+        return array_merge([
+            'id_token' => $token
+        ], json_decode(base64_decode(explode('.', $token)[1]), true));
     }
+
+    /**
+     * Get the GET parameters for the code request.
+     *
+     * @param string|null $state
+     * @return array
+     */
+    protected function getCodeFields($state = null)
+    {
+        return parent::getCodeFields($state) + [
+            'response_mode' => 'form_post'
+        ];
+    }}
 
     /**
      * {@inheritdoc}
